@@ -54,6 +54,7 @@ public class RomanNumeralParserTest {
         assertEquals("MIV", RomanNumeralParser.fromInteger(1004));
         assertEquals("XXXIV", RomanNumeralParser.fromInteger(34));
         assertEquals("CXXIV", RomanNumeralParser.fromInteger(124));
+        assertEquals("MCMLXIX", RomanNumeralParser.fromInteger(1969));
     }
 }
 
