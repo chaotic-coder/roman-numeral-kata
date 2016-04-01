@@ -13,7 +13,7 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
     static {
         Comparator<RomanNumeral> romanNumeralReverserComparator =
                 (RomanNumeral lhs, RomanNumeral rhs)->(rhs.getArabic() - lhs.getArabic());
-        
+
         romanNumerals = new TreeSet<RomanNumeral>(romanNumeralReverserComparator) {{
             add(new RomanNumeral(1000, "M"));
             add(new RomanNumeral(900, "CM"));
@@ -40,7 +40,7 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
 
         StringBuilder parsedNumber = new StringBuilder();
 
-        RomanNumeral nextNumeral = getNextBiggestDenominator(number);
+        RomanNumeral nextNumeral = getBiggestDenominator(number);
         log.debug("next numeral: " + nextNumeral.getRoman());
 
         int remainder = number - nextNumeral.getArabic();
@@ -52,10 +52,10 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
         return parsedNumber.toString();
     }
 
-    private RomanNumeral getNextBiggestDenominator(int number) {
+    private RomanNumeral getBiggestDenominator(int number) {
         RomanNumeral nextNumeral = null;
         for (RomanNumeral romanNumeral : romanNumerals) {
-            if (nextNumeral == null && number / romanNumeral.getArabic() > 0) {
+            if (nextNumeral == null && number/romanNumeral.getArabic() > 0) {
                 nextNumeral = romanNumeral;
             }
         }
