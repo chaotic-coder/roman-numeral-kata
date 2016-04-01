@@ -11,10 +11,10 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
     private static Set<RomanNumeral> romanNumerals;
 
     static {
-        Comparator<RomanNumeral> romanNumeralReverserComparator =
+        Comparator<RomanNumeral> romanNumeralReverseComparator =
                 (RomanNumeral lhs, RomanNumeral rhs)->(rhs.getArabic() - lhs.getArabic());
 
-        romanNumerals = new TreeSet<RomanNumeral>(romanNumeralReverserComparator) {{
+        romanNumerals = new TreeSet<RomanNumeral>(romanNumeralReverseComparator) {{
             add(new RomanNumeral(1000, "M"));
             add(new RomanNumeral(900, "CM"));
             add(new RomanNumeral(500, "D"));
