@@ -2,33 +2,35 @@ package com.quarrelsome.romannumerals.impl;
 
 import com.quarrelsome.romannumerals.exceptions.RomanNumeralParserOutOfRangeException;
 import org.apache.log4j.Logger;
-import org.springframework.context.annotation.Scope;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
     private static Logger log = Logger.getLogger(RomanNumeralParserImpl_v1.class);
 
-    private static Map<Integer, String> numeralLookup;
+    private static Set<RomanNumeral> romanNumerals;
 
     static {
-        numeralLookup = new LinkedHashMap<Integer, String>() {{
-            put(1000, "M");
-            put(900, "CM");
-            put(500, "D");
-            put(400, "CD");
-            put(100, "C");
-            put(90, "XC");
-            put(50, "L");
-            put(40, "XL");
-            put(10, "X");
-            put(9, "IX");
-            put(5, "V");
-            put(4, "IV");
-            put(1, "I");
+        Comparator<RomanNumeral> romanNumeralReverserComparator =
+                (RomanNumeral lhs, RomanNumeral rhs)->(rhs.getArabic() - lhs.getArabic());
+        
+        romanNumerals = new TreeSet<RomanNumeral>(romanNumeralReverserComparator) {{
+            add(new RomanNumeral(1000, "M"));
+            add(new RomanNumeral(900, "CM"));
+            add(new RomanNumeral(500, "D"));
+            add(new RomanNumeral(400, "CD"));
+            add(new RomanNumeral(100, "C"));
+            add(new RomanNumeral(90, "XC"));
+            add(new RomanNumeral(50, "L"));
+            add(new RomanNumeral(40, "XL"));
+            add(new RomanNumeral(10, "X"));
+            add(new RomanNumeral(9, "IX"));
+            add(new RomanNumeral(5, "V"));
+            add(new RomanNumeral(4, "IV"));
+            add(new RomanNumeral(1, "I"));
         }};
     }
+
 
     public String parse(int number) throws RomanNumeralParserOutOfRangeException {
 
@@ -38,11 +40,11 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
 
         StringBuilder parsedNumber = new StringBuilder();
 
-        Map.Entry<Integer, String> nextNumeral = getNextBiggestDenominator(number);
-        log.debug("next numeral: " + nextNumeral.getValue());
+        RomanNumeral nextNumeral = getNextBiggestDenominator(number);
+        log.debug("next numeral: " + nextNumeral.getRoman());
 
-        int remainder = number - nextNumeral.getKey();
-        parsedNumber.append(nextNumeral.getValue());
+        int remainder = number - nextNumeral.getArabic();
+        parsedNumber.append(nextNumeral.getRoman());
         if (remainder != 0) {
             parsedNumber.append(parse(remainder));
         }
@@ -50,11 +52,11 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
         return parsedNumber.toString();
     }
 
-    private Map.Entry<Integer, String> getNextBiggestDenominator(int number) {
-        Map.Entry<Integer, String> nextNumeral = null;
-        for (Map.Entry<Integer, String> numeral : numeralLookup.entrySet()) {
-            if (nextNumeral == null && number / numeral.getKey() > 0) {
-                nextNumeral = numeral;
+    private RomanNumeral getNextBiggestDenominator(int number) {
+        RomanNumeral nextNumeral = null;
+        for (RomanNumeral romanNumeral : romanNumerals) {
+            if (nextNumeral == null && number / romanNumeral.getArabic() > 0) {
+                nextNumeral = romanNumeral;
             }
         }
         return nextNumeral;
