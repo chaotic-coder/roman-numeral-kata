@@ -1,60 +1,72 @@
 package com.quarrelsome.romannumerals;
 
 
+import com.quarrelsome.romannumerals.config.RomanNumeralParserConfig;
 import com.quarrelsome.romannumerals.exceptions.RomanNumeralParserOutOfRangeException;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static junit.framework.TestCase.assertEquals;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes=RomanNumeralParserConfig.class,
+        loader=AnnotationConfigContextLoader.class)
 public class RomanNumeralParserTest {
+
+    @Autowired
+    private RomanNumeralParser parser;
 
     @Test(expected = RomanNumeralParserOutOfRangeException.class)
     public void rejectsZero() throws RomanNumeralParserOutOfRangeException {
-        RomanNumeralParser.fromInteger(0);
+        parser.fromInteger(0);
     }
 
     @Test(expected = RomanNumeralParserOutOfRangeException.class)
     public void rejectsGreaterThan3000() throws RomanNumeralParserOutOfRangeException {
-        RomanNumeralParser.fromInteger(3001);
+        parser.fromInteger(3001);
     }
 
     @Test
     public void parsesNumbersForSingleNumeral() throws RomanNumeralParserOutOfRangeException {
-        assertEquals("I", RomanNumeralParser.fromInteger(1));
-        assertEquals("V", RomanNumeralParser.fromInteger(5));
-        assertEquals("X", RomanNumeralParser.fromInteger(10));
-        assertEquals("L", RomanNumeralParser.fromInteger(50));
-        assertEquals("C", RomanNumeralParser.fromInteger(100));
-        assertEquals("D", RomanNumeralParser.fromInteger(500));
-        assertEquals("M", RomanNumeralParser.fromInteger(1000));
+        assertEquals("I", parser.fromInteger(1));
+        assertEquals("V", parser.fromInteger(5));
+        assertEquals("X", parser.fromInteger(10));
+        assertEquals("L", parser.fromInteger(50));
+        assertEquals("C", parser.fromInteger(100));
+        assertEquals("D", parser.fromInteger(500));
+        assertEquals("M", parser.fromInteger(1000));
     }
 
     @Test
     public void parsesNumbersForMultipleSingleNumerals() throws RomanNumeralParserOutOfRangeException {
-        assertEquals("II", RomanNumeralParser.fromInteger(2));
-        assertEquals("III", RomanNumeralParser.fromInteger(3));
-        assertEquals("XX", RomanNumeralParser.fromInteger(20));
-        assertEquals("MMM", RomanNumeralParser.fromInteger(3000));
+        assertEquals("II", parser.fromInteger(2));
+        assertEquals("III", parser.fromInteger(3));
+        assertEquals("XX", parser.fromInteger(20));
+        assertEquals("MMM", parser.fromInteger(3000));
     }
 
     @Test
     public void parsesNumbersForCompositeNumerals() throws RomanNumeralParserOutOfRangeException {
-        assertEquals("VIII", RomanNumeralParser.fromInteger(8));
-        assertEquals("DL", RomanNumeralParser.fromInteger(550));
-        assertEquals("DLII", RomanNumeralParser.fromInteger(552));
-        assertEquals("CCLVI", RomanNumeralParser.fromInteger(256));
-        assertEquals("MCV", RomanNumeralParser.fromInteger(1105));
+        assertEquals("VIII", parser.fromInteger(8));
+        assertEquals("DL", parser.fromInteger(550));
+        assertEquals("DLII", parser.fromInteger(552));
+        assertEquals("CCLVI", parser.fromInteger(256));
+        assertEquals("MCV", parser.fromInteger(1105));
     }
 
     @Test
     public void parsedNumberRequiringSubtractorNumerals() throws RomanNumeralParserOutOfRangeException {
-        assertEquals("IV", RomanNumeralParser.fromInteger(4));
-        assertEquals("IX", RomanNumeralParser.fromInteger(9));
-        assertEquals("MIV", RomanNumeralParser.fromInteger(1004));
-        assertEquals("XXXIV", RomanNumeralParser.fromInteger(34));
-        assertEquals("CXXIV", RomanNumeralParser.fromInteger(124));
-        assertEquals("MCMLXIX", RomanNumeralParser.fromInteger(1969));
+        assertEquals("IV", parser.fromInteger(4));
+        assertEquals("IX", parser.fromInteger(9));
+        assertEquals("MIV", parser.fromInteger(1004));
+        assertEquals("XXXIV", parser.fromInteger(34));
+        assertEquals("CXXIV", parser.fromInteger(124));
+        assertEquals("MCMLXIX", parser.fromInteger(1969));
     }
 }
 
