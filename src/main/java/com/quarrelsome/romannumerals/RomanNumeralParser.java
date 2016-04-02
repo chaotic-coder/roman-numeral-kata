@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class RomanNumeralParser {
 
     @Autowired
-    private  RomanNumeralParserImpl romanNumeralParserImpl;
+    private RomanNumeralParserImpl romanNumeralParserImpl;
 
     public String fromInteger(int number) throws RomanNumeralParserOutOfRangeException {
         return romanNumeralParserImpl.parse(number);

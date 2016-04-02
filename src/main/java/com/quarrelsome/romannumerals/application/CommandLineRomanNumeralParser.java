@@ -22,17 +22,17 @@ public class CommandLineRomanNumeralParser {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(RomanNumeralParserConfig.class);
 
-        RomanNumeralParser parser = (RomanNumeralParser)context.getBean("romanNumeralParser");
+        RomanNumeralParser parser = (RomanNumeralParser) context.getBean("romanNumeralParser");
 
         Integer number = Integer.parseInt(args[0]);
         try {
             System.out.println(parser.fromInteger(number));
         } catch (RomanNumeralParserOutOfRangeException e) {
-            System.out.println("Number out of range. Try again!");
+            System.err.println("Number out of range. Try again!");
         }
     }
 
     private static void usage() {
-        System.out.println("Usage: CommandLineRomanNumeralParser <number>");
+        System.err.println("Usage: CommandLineRomanNumeralParser <number>");
     }
 }

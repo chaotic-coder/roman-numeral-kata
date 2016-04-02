@@ -3,7 +3,6 @@ package com.quarrelsome.romannumerals;
 
 import com.quarrelsome.romannumerals.config.RomanNumeralParserConfig;
 import com.quarrelsome.romannumerals.exceptions.RomanNumeralParserOutOfRangeException;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,8 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import static junit.framework.TestCase.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=RomanNumeralParserConfig.class,
-        loader=AnnotationConfigContextLoader.class)
+@ContextConfiguration(classes = RomanNumeralParserConfig.class,
+        loader = AnnotationConfigContextLoader.class)
 public class RomanNumeralParserTest {
 
     @Autowired
