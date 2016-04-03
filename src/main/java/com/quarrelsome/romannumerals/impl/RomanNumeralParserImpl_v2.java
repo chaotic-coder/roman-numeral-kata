@@ -1,12 +1,16 @@
 package com.quarrelsome.romannumerals.impl;
 
-import com.quarrelsome.romannumerals.exceptions.RomanNumeralParserOutOfRangeException;
 import org.apache.log4j.Logger;
 
 import java.util.TreeSet;
 
+/**
+ * Parses arabic numbers to roman numerals
+ *
+ * Calculates subtractor numerals in real-time (as opposed to hard-coding them)
+ */
 public class RomanNumeralParserImpl_v2 extends AbstractRomanNumeralParserImpl {
-    private static Logger log = Logger.getLogger(RomanNumeralParserImpl_v1.class);
+    private static Logger log = Logger.getLogger(RomanNumeralParserImpl_v2.class);
 
     private static TreeSet<RomanNumeral> romanNumerals;
 
@@ -25,6 +29,8 @@ public class RomanNumeralParserImpl_v2 extends AbstractRomanNumeralParserImpl {
     private RomanNumeralSubtractorCalculator subtractorCalculator;
 
     public RomanNumeralParserImpl_v2() {
+        super(romanNumerals);
+
         subtractorCalculator = new RomanNumeralSubtractorCalculator(romanNumerals);
 
         subtractorCalculator.getSubtractors().stream().
@@ -32,29 +38,5 @@ public class RomanNumeralParserImpl_v2 extends AbstractRomanNumeralParserImpl {
 
         log.debug("Roman numerals with subtractors:" + romanNumerals);
 
-    }
-
-    public String parse(int number) throws RomanNumeralParserOutOfRangeException {
-        checkNumberIsWithinRange(number);
-        log.debug("parsing: " + number);
-
-        StringBuilder parsedNumber = new StringBuilder();
-
-        RomanNumeral nextNumeral = getBiggestDenominator(number);
-        log.debug("next numeral: " + nextNumeral);
-        parsedNumber.append(nextNumeral.getRoman());
-        int remainder = number - nextNumeral.getArabic();
-        if (remainder != 0) {
-            parsedNumber.append(parse(remainder));
-        }
-
-        return parsedNumber.toString();
-    }
-
-    private RomanNumeral getBiggestDenominator(int number) {
-        return romanNumerals.descendingSet().stream().
-            filter(x -> number/x.getArabic() > 0).
-            findFirst().
-            get();
     }
 }

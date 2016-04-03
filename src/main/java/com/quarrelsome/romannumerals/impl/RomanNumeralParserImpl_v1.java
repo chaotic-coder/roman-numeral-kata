@@ -1,12 +1,13 @@
 package com.quarrelsome.romannumerals.impl;
 
-import com.quarrelsome.romannumerals.exceptions.RomanNumeralParserOutOfRangeException;
-import org.apache.log4j.Logger;
-
 import java.util.TreeSet;
 
+/**
+ * Parses arabic numbers to roman numerals
+ *
+ * Hard-codes subtractor numerals (rather than calculating them)
+ */
 public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
-    private static Logger log = Logger.getLogger(RomanNumeralParserImpl_v1.class);
 
     private static TreeSet<RomanNumeral> romanNumerals;
 
@@ -28,27 +29,7 @@ public class RomanNumeralParserImpl_v1 extends AbstractRomanNumeralParserImpl {
         }};
     }
 
-    public String parse(int number) throws RomanNumeralParserOutOfRangeException {
-        checkNumberIsWithinRange(number);
-        log.debug("parsing: " + number);
-
-        StringBuilder parsedNumber = new StringBuilder();
-
-        RomanNumeral nextNumeral = getBiggestDenominator(number);
-        log.debug("next numeral: " + nextNumeral);
-        parsedNumber.append(nextNumeral.getRoman());
-        int remainder = number - nextNumeral.getArabic();
-        if (remainder != 0) {
-            parsedNumber.append(parse(remainder));
-        }
-
-        return parsedNumber.toString();
-    }
-
-    private RomanNumeral getBiggestDenominator(int number) {
-        return romanNumerals.descendingSet().stream().
-            filter(x -> number/x.getArabic() > 0).
-            findFirst().
-            get();
+    public RomanNumeralParserImpl_v1() {
+        super(romanNumerals);
     }
 }
