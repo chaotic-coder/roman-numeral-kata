@@ -3,6 +3,7 @@ package com.quarrelsome.romannumerals.config;
 import com.quarrelsome.romannumerals.RomanNumeralParser;
 import com.quarrelsome.romannumerals.impl.RomanNumeralParserImpl;
 import com.quarrelsome.romannumerals.impl.RomanNumeralParserImpl_v1;
+import com.quarrelsome.romannumerals.impl.RomanNumeralParserImpl_v2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

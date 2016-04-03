@@ -13,19 +13,25 @@ public class RomanNumeralParserImpl_v2 extends AbstractRomanNumeralParserImpl {
     static {
         romanNumerals = new TreeSet<RomanNumeral>() {{
             add(new RomanNumeral(1000, "M"));
-            add(new RomanNumeral(900, "CM"));
             add(new RomanNumeral(500, "D"));
-            add(new RomanNumeral(400, "CD"));
             add(new RomanNumeral(100, "C"));
-            add(new RomanNumeral(90, "XC"));
             add(new RomanNumeral(50, "L"));
-            add(new RomanNumeral(40, "XL"));
             add(new RomanNumeral(10, "X"));
-            add(new RomanNumeral(9, "IX"));
             add(new RomanNumeral(5, "V"));
-            add(new RomanNumeral(4, "IV"));
             add(new RomanNumeral(1, "I"));
         }};
+    }
+
+    private RomanNumeralSubtractorCalculator subtractorCalculator;
+
+    public RomanNumeralParserImpl_v2() {
+        subtractorCalculator = new RomanNumeralSubtractorCalculator(romanNumerals);
+
+        subtractorCalculator.getSubtractors().stream().
+            forEach(x->romanNumerals.add(new RomanNumeral(x.getLeft(), x.getRight())));
+
+        log.debug("Roman numerals with subtractors:" + romanNumerals);
+
     }
 
     public String parse(int number) throws RomanNumeralParserOutOfRangeException {
