@@ -25,13 +25,6 @@ public class RomanNumeralSubtractorCalculator {
         return subtractors;
     }
 
-    public Pair<Integer, String> getSubtractor(int number) {
-        return subtractors.stream().
-            filter(x->x.getLeft() == number).
-            findFirst().
-            orElse(null);
-    }
-
     private List<Pair<Integer, String>> calculateSubtractors(List<RomanNumeral> sortedRomanNumerals, int startPos) {
         List<Pair<Integer, String>> subtractors = new ArrayList<>();
 
