@@ -34,7 +34,7 @@ public class RomanNumeralParserImpl_v2 extends AbstractRomanNumeralParserImpl {
         subtractorCalculator = new RomanNumeralSubtractorCalculator(romanNumerals);
 
         subtractorCalculator.getSubtractors().stream().
-            forEach(x->romanNumerals.add(new RomanNumeral(x.getLeft(), x.getRight())));
+            forEach(x->romanNumerals.add(new RomanNumeral(x.getArabic(), x.getRoman())));
 
         log.debug("Roman numerals with subtractors:" + romanNumerals);
     }
