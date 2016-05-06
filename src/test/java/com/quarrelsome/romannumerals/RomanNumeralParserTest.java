@@ -62,9 +62,11 @@ public class RomanNumeralParserTest {
     public void parsedNumberRequiringSubtractorNumerals() throws RomanNumeralParserOutOfRangeException {
         assertEquals("IV", parser.fromInteger(4));
         assertEquals("IX", parser.fromInteger(9));
+        assertEquals("XL", parser.fromInteger(40));
         assertEquals("MIV", parser.fromInteger(1004));
         assertEquals("XXXIV", parser.fromInteger(34));
         assertEquals("CXXIV", parser.fromInteger(124));
+        assertEquals("CCXC", parser.fromInteger(290));
         assertEquals("MCMLXIX", parser.fromInteger(1969));
     }
 }
