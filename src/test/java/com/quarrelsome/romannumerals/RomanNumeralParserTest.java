@@ -42,7 +42,7 @@ public class RomanNumeralParserTest {
     }
 
     @Test
-    public void parsesNumbersForMultipleSingleNumerals() throws RomanNumeralParserOutOfRangeException {
+    public void parsesNumbersForRepeatingNumerals() throws RomanNumeralParserOutOfRangeException {
         assertEquals("II", parser.fromInteger(2));
         assertEquals("III", parser.fromInteger(3));
         assertEquals("XX", parser.fromInteger(20));
